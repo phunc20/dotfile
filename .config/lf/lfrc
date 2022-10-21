@@ -48,6 +48,7 @@ cmd open ${{
     case $(file --mime-type $f -b) in
         text/*) $EDITOR $fx;;
         application/pdf) zathura $fx 2> /dev/null &;;
+        application/json) $EDITOR $fx;;
         image/vnd.djvu) zathura $fx;;
         image/heic) sxiv $fx;;
         image/*) sxiv $fx;;
