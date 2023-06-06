@@ -1,0 +1,11 @@
+#!/bin/bash
+t2s() {
+    sed 's/d/*24*3600 +/g; s/h/*3600 +/g; s/m/*60 +/g; s/s/\+/g; s/+[ ]*$//g' <<< "$@" | bc
+}
+
+#num_sec=$(echo $@ | tr HMS hms | awk -F '[hms:]' '{ print ($1 * 3600) + ($2 * 60) + $3 }')
+#num_sec=$(echo $@ | tr HMS hms | awk -F '[hms:]' '{ print ($1 * 3600) + ($2 * 60) + $3 }')
+num_sec=$(t2s $@)
+yes | pv -SL1 -F "poweroff in %e" -s $num_sec > /dev/null && poweroff
+
+#awk -F':' '{if (NF == 2) {print $1 * 60 + $2} else {print $1 * 60 * 60 + $2 * 60 + $3}}'
