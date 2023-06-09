@@ -1,0 +1,28 @@
+## Audiokeys
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    #amixer sset {Master,Headphone,Speaker} toggle; refbar
+XF86Audio{Raise,Lower}Volume
+    amixer sset Master 3%{+,-}; refbar
+    #amixer sset Master 3%{+,-}; refbar; mpv $HOME/downloads/aero15x/snap/gnome-3-34-1804/36/usr/share/sounds/gnome/default/alerts/bark.ogg
+
+
+## Screen Brightness
+XF86MonBrightnessUp
+    bright-up
+XF86MonBrightnessDown
+    bright-down
+
+## Print Screen
+Print
+    png="${HOME}/pictures/screenshots/PrtSc-%Y-%m-%d-%Hh%Mm%Ss.png" && ms=800 && s=$(python -c "print($ms/1000)") && notify-send -t "$ms" "PrtSc: ms = $ms, s = $s" && sleep "$s"s && scrot "${png}"
+
+## Rotate Primary Screen and Adapt Trackpoint Direction
+super + Up
+    xrandr --output `xrandr | grep "connected primary" | cut -d' ' -f1` --rotate normal; xinput set-prop "TPPS/2 IBM TrackPoint" "Coordinate Transformation Matrix" 1 0 0 0 1 0 0 0 1
+super + Down
+    xrandr --output `xrandr | grep "connected primary" | cut -d' ' -f1` --rotate inverted; xinput set-prop "TPPS/2 IBM TrackPoint" "Coordinate Transformation Matrix" -1 0 1 0 -1 1 0 0 1
+super + Left
+    xrandr --output `xrandr | grep "connected primary" | cut -d' ' -f1` --rotate left; xinput set-prop "TPPS/2 IBM TrackPoint" "Coordinate Transformation Matrix" 0 -1 1 1 0 0 0 0 1
+super + Right
+    xrandr --output `xrandr | grep "connected primary" | cut -d' ' -f1` --rotate right; xinput set-prop "TPPS/2 IBM TrackPoint" "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
