@@ -1,6 +1,7 @@
 ## Audiokeys
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    pactl set-sink-mute @DEFAULT_SINK@ toggle; play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga 2> /dev/null; refbar
+    #pactl set-sink-mute @DEFAULT_SINK@ toggle
     #amixer sset {Master,Headphone,Speaker} toggle; refbar
 XF86Audio{Raise,Lower}Volume
     amixer sset Master 3%{+,-}; refbar
