@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if command -v iwctl &> /dev/null
+then
+    # Method 1. Ask the interface to scan again
+    # TODO: dynamically get the <interface>
+    #INTERFACE="wlan0"
+    #iwctl station $INTERFACE scan
+    ##iwctl station $INTERFACE connect $PREV_SSID
+    ##printf "iwctl station $INTERFACE connect $PREV_SSID\n"
+
+    # Method 2. Turn on the adapter
+    # TODO
+    # 1. dynamically get the <phy>
+    iwctl adapter phy0 set-property Powered on
+elif command -v nmcli &> /dev/null
+then
+    nmcli radio wifi on
+fi

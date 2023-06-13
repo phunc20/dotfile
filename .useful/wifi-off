@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if command -v iwctl &> /dev/null
+then
+    # Method 1. Disconnect any connected wifi
+    # TODO
+    # 1. dynamically get the <interface>
+    # 2. export the connected network's SSID
+    #INTERFACE="wlan0"
+    #export PREV_SSID=$(iwctl station show | grep "Connected network" | awk '{for (i=3; i<NF; i++) printf $i " "; print $NF}')
+    #iwctl station $INTERFACE disconnect
+
+    # Method 2. Cut off the entire adapter
+    # TODO
+    # 1. dynamically get the <phy>
+    iwctl adapter phy0 set-property Powered off
+elif command -v nmcli &> /dev/null
+then
+    nmcli radio wifi off
+fi

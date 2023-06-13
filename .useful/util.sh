@@ -81,3 +81,14 @@ ext() {
         find $1 -maxdepth 1 -type f | sed $sub | sort | uniq -c | awk '{print $2 "\t" $1}'
     fi
 }
+
+
+mkcd () {
+  if [ "$#" -ne 1 ]
+  then
+    echo "Exactly one input arg is allowed."
+  else
+    mkdir -p "$1"
+    cd "$1"
+  fi
+}
