@@ -1,0 +1,37 @@
+#!/bin/bash
+
+tmp_file="/tmp/connected-displays"
+xrandr | grep "\sconnected" | cut -d' ' -f1 > $tmp_file
+n_connected=`wc -l "$tmp_file" | cut -d' ' -f1`
+# Need to cut, because by default wc outputs the filename in addition to the count.
+[ $n_connected -eq 1 ] && printf "Only ONE device detected.\nPlease plug in another device and rerun this script.\n" && exit 0
+
+# -t to remove trailing newline (cf. mapfile. [Search for "newline"])
+readarray -t connected < $tmp_file
+echo all >> $tmp_file
+
+chosen=`cat $tmp_file | dmenu -l 20`
+
+xrandr_command () {
+  command="xrandr"
+  if [ $1 ]; then
+    for (( i=0; i<${#connected[@]}; i++ ))
+    do
+      if [ "$1" = "${connected[$i]}" ]; then
+        command="$command --output ${connected[$i]} --auto"
+      else
+        command="$command --output ${connected[$i]} --off"
+      fi
+    done
+  else
+    for (( i=0; i<${#connected[@]}; i++ ))
+    do
+      command="$command --output ${connected[$i]} --auto"
+    done
+  fi
+  eval $command
+}
+
+
+[ $chosen = "all" ] && xrandr_command && exit 0
+xrandr_command $chosen
