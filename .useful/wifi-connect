@@ -5,9 +5,39 @@ then
     # Method 1. Ask the interface to scan again
     # TODO: dynamically get the <interface>
     INTERFACE="wlan0"
-    printf "iwctl station \"$INTERFACE\" connect \"$@\"\n"
-    iwctl station "$INTERFACE" connect "$1"
+    SSID="$@"
+    echo "iwctl station \"$INTERFACE\" connect \"$@\""
+    iwctl station "$INTERFACE" scan
+    if [ -z "$SSID" ]; then
+        #echo "No specified SSID"
+        # Filter unrelated lines, keep signal Magnitude, rm ANSI escape code, filter currently connected SSID
+        chosen_line=$(iwctl station "$INTERFACE" get-networks | tail -n+5 | head -n-1 | sed -e 's/\x1b\[1;90m\**\x1b\[0m//g' -e 's/\x1b\[[0-9;]*m//g' | grep -v "^  >" | dmenu -l 100)
+        #echo "chosen_line = \"$chosen_line\""
+        # Trim leading spaces, replace '\s\+\psk\s\+' by '\t'
+        SSID=$(echo $chosen_line | sed -e 's/^\s*//' -e 's/\s\+\(psk\|open\)\s\+/\t/' | cut -f1)
+        #echo "SSID = \"$SSID\""
+    else
+        #echo "specified SSID = \"$SSID\""
+        :
+    fi
+    # TODO: Test SSID exists
+    iwctl station "$INTERFACE" connect "$SSID"
 elif command -v nmcli > /dev/null
 then
     nmcli radio wifi on
 fi
+
+
+
+#iwctl station wlan0 get-networks | tail -n +5 | awk '{print $1}'
+#iwctl station wlan0 get-networks | tail -n +5 | cut -f1
+#iwctl station wlan0 get-networks | tail -n+5 | sed -e 's/\x1b\[[0-9;]*m//g'
+#iwctl station wlan0 get-networks | tail -n+5 | head -n-1 | sed -e 's/\x1b\[[0-9;]*m//g' | grep -v "^  >"
+#In [23]: ssids = []
+#    ...: for line in lines:
+#    ...:     line = line.strip()
+#    ...:     index = line.find("psk")
+#    ...:     print(f'{index = }')
+#    ...:     ssid = line[:index].rstrip()
+#    ...:     ssids.append(ssid)
+#    ...:
