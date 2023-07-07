@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if command -v iwctl &> /dev/null
+then
+    # Method 1. Ask the interface to scan again
+    # TODO: dynamically get the <interface>
+    INTERFACE="wlan0"
+    iwctl station "$INTERFACE" scan
+elif command -v nmcli &> /dev/null
+then
+    nmcli radio wifi on
+fi

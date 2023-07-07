@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if command -v iwctl &> /dev/null
+then
+    # Method 1. Ask the interface to scan again
+    # TODO: dynamically get the <interface>
+    INTERFACE="wlan0"
+    iwctl station "$INTERFACE" get-networks
+elif command -v nmcli &> /dev/null
+then
+    nmcli device wifi list
+fi
