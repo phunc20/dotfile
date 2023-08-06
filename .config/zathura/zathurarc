@@ -1,0 +1,3 @@
+#man zathurarc
+set selection-clipboard clipboard
+set font "Sarasa 14"
