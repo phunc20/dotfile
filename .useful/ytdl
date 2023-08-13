@@ -1,0 +1,10 @@
+#!/bin/bash
+# TODO:
+# 1. Add options, cf. <https://www.redhat.com/sysadmin/arguments-options-bash-scripts>,
+#    e.g. verbose \implies print pbar; otherwise hide pbar
+
+if command -v youtube-dl > /dev/null
+then
+    youtube-dl -f best --write-thumbnail "$@" &
+    wait $! && mkdir -p .thumbnails && mv ./*.{jpg,webp} .thumbnails/ 2> /dev/null
+fi
