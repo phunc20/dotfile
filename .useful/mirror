@@ -1,0 +1,8 @@
+#!/bin/bash
+webcam=${1:-/dev/video0}
+if test -e $webcam; then
+  #printf "Webcam $webcam exists.\n"
+  mpv "av://v4l2:/$webcam" --profile=low-latency --untimed
+else
+  printf "Webcam $webcam does NOT exist!\n"
+fi
