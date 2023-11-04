@@ -1,4 +1,3 @@
-#!/bin/bash
 num_sec=$(seconds $1)
 do_what=${@:2}
 yes | pv -SL1 -F "$do_what in %e" -s $num_sec > /dev/null && $do_what

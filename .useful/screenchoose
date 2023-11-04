@@ -1,5 +1,3 @@
-#!/bin/bash
-
 tmp_file="/tmp/connected-displays"
 xrandr | grep "\sconnected" | cut -d' ' -f1 > $tmp_file
 n_connected=`wc -l "$tmp_file" | cut -d' ' -f1`

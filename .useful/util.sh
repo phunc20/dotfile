@@ -1,6 +1,3 @@
-#!/bin/bash
-
-
 vicd()
 {
     local dst="$(command vifm --choose-dir - "$@")"

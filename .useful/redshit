@@ -1,2 +1,1 @@
-#!/bin/bash
 command -v redshift > /dev/null && redshift -P -O ${1:-3600}

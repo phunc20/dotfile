@@ -1,5 +1,3 @@
-#!/bin/bash
-
 if command -v iwctl > /dev/null
 then
     # Method 1. Ask the interface to scan again

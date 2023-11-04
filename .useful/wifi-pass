@@ -1,5 +1,3 @@
-#!/bin/bash
-
 IWD_DIR="/var/lib/iwd"
 ssid=$(sudo find "$IWD_DIR" -iname "*psk" -printf "%f\n" | dmenu -l 10 -i)
 passphrase=$(sudo grep "^Passphrase=" "$IWD_DIR/$ssid" | cut -d = -f 2)
