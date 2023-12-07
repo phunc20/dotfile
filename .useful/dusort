@@ -1,1 +1,1 @@
-find ${1:-$PWD} -maxdepth 1 -mindepth 1 -name "*" -exec du -hsx {} \; | sort -h
+find ${1:-.} -maxdepth 1 -mindepth 1 -name "*" -exec du -hsx {} \; | sort -h
