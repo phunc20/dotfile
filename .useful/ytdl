@@ -1,9 +1,17 @@
+#!/bin/bash
 # TODO:
 # 1. Add options, cf. <https://www.redhat.com/sysadmin/arguments-options-bash-scripts>,
 #    e.g. verbose \implies print pbar; otherwise hide pbar
 
-if command -v youtube-dl > /dev/null
+if command -v yt-dlp > /dev/null
 then
-    youtube-dl -f best --write-thumbnail "$@" &
+    #youtube-dl -f best "$@" > /dev/null &
+    # --remux-video mp4
+    yt-dlp -f "bv[filesize<80M]+ba[filesize<20M]" --remux-video "mp4" --write-thumbnail "$@" &
+    #if [ -d .thumbnails ]; then
+    #    wait $!
+    #    mv ./*.{jpg,webp} .thumbnails/
+    #fi
+    #wait $! && [ -d .thumbnails ] && mv ./*.{jpg,webp} .thumbnails/ 2> /dev/null
     wait $! && mkdir -p .thumbnails && mv ./*.{jpg,webp} .thumbnails/ 2> /dev/null
 fi
