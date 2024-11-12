@@ -1,0 +1,9 @@
+!! sxiv config
+!! N.B. 'S' should be capitalized.
+!Sxiv.font:       Iosevka:size=16
+Sxiv.font:       Liberation Mono:size=16:style=bold
+!! foreground: The bottom strip displaying filename, #(files), etc.
+!! hex color code: Upper/lower-case both ok
+Sxiv.foreground: #C792EA
+!Sxiv.foreground: #1144f0
+Sxiv.background: #000000
