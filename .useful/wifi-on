@@ -16,4 +16,7 @@ then
 elif command -v nmcli &> /dev/null
 then
     nmcli radio wifi on
+elif command -v ip &> /dev/null
+then
+    sudo ip link set dev wlan0 up
 fi

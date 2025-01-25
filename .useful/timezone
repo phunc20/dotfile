@@ -1,0 +1,16 @@
+choice=$(printf "Infer (https://ipapi.co/timezone)\nSelect from list\n\"yyyy-MM-dd hh:mm:ss\"" | dmenu -l 10 -p "Change timezone" | cut -d " " -f1)
+#printf "choice = $choice\n"
+case $choice in
+    Infer)
+        tz=$(curl --fail https://ipapi.co/timezone)
+        ;;
+    Select)
+        tz=$(timedatectl list-timezones | dmenu -l 10)
+        ;;
+    *)
+        exit
+        ;;
+esac
+#printf "tz = $tz\n"
+timedatectl set-timezone $tz
+#tzselect
